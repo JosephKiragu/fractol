@@ -2,11 +2,15 @@
 
 void fractal_selector(t_fractal *fractal, char **argv)
 {
-	if (!ft_strcmp(argv[1], "-julia"))
+	if (!ft_strcmp(argv[1], "julia"))
 		fractal->fractal.type = 1;
+	else if (!ft_strcmp(argv[1], "mandelbrot"))
+		fractal->fractal.type = 2;
+	else if (!ft_strcmp(argv[1], "rabbit"))
+		fractal->fractal.type = 3;
 	else
 	{
-		printf("\nError : type -julia");
+		printf("\nError : type julia or mandelbrot or rabbit");
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -34,8 +38,6 @@ void ft_initialize(t_fractal *fractal, char **argv)
 	fractal->fractal.height = 0x0;
 	fractal->fractal.width = 0x0;
 }
-
-
 
 
 int main (int argc, char **argv)

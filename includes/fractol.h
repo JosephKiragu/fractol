@@ -91,6 +91,8 @@ typedef struct s_mlx
 
  int    ft_draw(t_fractal *fractal);
  int    ft_julia(t_fractal *fractal);
+ int    ft_mandelbrot(t_fractal *fractal);
+ int    ft_rabbit(t_fractal *fractal);
  void   ft_print_pixel(t_fractal *fractal, int depth);
  void   ft_quit(int pid);
  int	lol(void);

@@ -13,6 +13,10 @@ int ft_draw(t_fractal *fractal)
         {
             if (fractal->fractal.type == 1)
                 depth = ft_julia(fractal);
+            if (fractal->fractal.type == 2)
+                depth = ft_mandelbrot(fractal);
+            if (fractal->fractal.type == 3)
+                depth = ft_rabbit(fractal);
             ft_print_pixel(fractal, depth);
             fractal->fractal.width += 1;
         }

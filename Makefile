@@ -9,6 +9,8 @@ HEADER = ./includes/fractol.h
 SRC =	./sources/main.c \
 		./sources/pixel.c \
 		./sources/juliaSetConstructor.c \
+		./sources/mandelbrotSetConstructor.c \
+		./sources/rabbitSetConstructor.c \
 		./sources/draw.c \
 		./sources/libft_utils.c \
 		./sources/hooks.c
