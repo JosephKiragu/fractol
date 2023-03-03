@@ -1,86 +1,88 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jkiragu <jkiragu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/02 15:32:45 by jkiragu           #+#    #+#             */
+/*   Updated: 2023/03/03 18:06:12 by jkiragu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
-void	ft_quit(int pid)
-{
-	kill(pid, SIGPIPE);
-}
-
-int	lol(void)
-{
-	exit (0);
-	return (0);
-}
-
-int	key_hook(int hook, t_fractal *fractal)
+int	key_hook(int hook, t_fractal *fract)
 {
 	if (hook == ESC || hook == DESTROY)
 	{
 		printf("GOOD");
-		ft_quit(fractal->pid);
+		ft_quit(fract->pid);
 		exit (EXIT_SUCCESS);
 	}
 	else if (hook == SPACE)
-		ft_rgb_randomizer(fractal);
+		ft_rgb_randomizer(fract);
 	else if (hook == UP)
-		fractal->fractal.zComplex.imaginery -= 10 / fractal->fractal.scale;
+		fract->fract.z_comp.imgn -= 10 / fract->fract.scale;
 	else if (hook == DOWN)
-		fractal->fractal.zComplex.imaginery += 10 / fractal->fractal.scale;
+		fract->fract.z_comp.imgn += 10 / fract->fract.scale;
 	else if (hook == LEFT)
-		fractal->fractal.zComplex.real -= 10 / fractal->fractal.scale;
+		fract->fract.z_comp.real -= 10 / fract->fract.scale;
 	else if (hook == RIGHT)
-		fractal->fractal.zComplex.real += 10 / fractal->fractal.scale;
-	fractal->fractal.height = 0;
-	fractal->fractal.width = 0;
-	ft_draw(fractal);
+		fract->fract.z_comp.real += 10 / fract->fract.scale;
+	fract->fract.height = 0;
+	fract->fract.width = 0;
+	ft_draw(fract);
 	return (EXIT_SUCCESS);
 }
 
-void	ft_zoom_in(int x, int y, t_fractal *fractal)
+void	ft_zoom_in(int x, int y, t_fractal *fract)
 {
 	double	scalar;
 
-	if (fractal->fractal.scale >= SCALE_LIMIT)
+	if (fract->fract.scale >= SCALE_LIMIT)
 		return ;
 	else
 	{
-		scalar = fractal->fractal.scale * SCALE_PERC;
-		fractal->fractal.zComplex.real = ((double) x / fractal->fractal.scale \
-				+ fractal->fractal.zComplex.real - (scalar / 2));
-		fractal->fractal.zComplex.real += (scalar / 2) - ((double)x / scalar);
-		fractal->fractal.zComplex.imaginery = ((double) y / fractal->fractal.scale + \
-				fractal->fractal.zComplex.imaginery) - (scalar / 2);
-		fractal->fractal.zComplex.imaginery += (scalar / 2) - ((double) y / scalar);
-		fractal->fractal.scale *= SCALE_PERC;
-		fractal->fractal.iteration += SCALE_ITER;
-		ft_rgb_randomizer(fractal);
+		scalar = fract->fract.scale * SCALE_PERC;
+		fract->fract.z_comp.real = ((double) x / fract->fract.scale \
+				+ fract->fract.z_comp.real - (scalar / 2));
+		fract->fract.z_comp.real += (scalar / 2) - ((double)x / scalar);
+		fract->fract.z_comp.imgn = ((double) y / \
+				fract->fract.scale + fract->fract.z_comp.imgn) \
+				- (scalar / 2);
+		fract->fract.z_comp.imgn \
+				+= (scalar / 2) - ((double) y / scalar);
+		fract->fract.scale *= SCALE_PERC;
+		fract->fract.iter += SCALE_ITER;
+		ft_rgb_randomizer(fract);
 	}
 }
 
-void	ft_zoom_out(int x, int y, t_fractal *fractal)
+void	ft_zoom_out(int x, int y, t_fractal *fract)
 {
 	double	scalar;
 
-	scalar = fractal->fractal.scale / SCALE_PERC;
-	fractal->fractal.zComplex.real = ((double) x / fractal->fractal.scale + \
-			fractal->fractal.zComplex.real) - (scalar / 2);
-	fractal->fractal.zComplex.real += (scalar / 2) - ((double) x / scalar);
-	fractal->fractal.zComplex.imaginery = ((double) y / fractal->fractal.scale + \
-			fractal->fractal.zComplex.imaginery) - (scalar / 2);
-	fractal->fractal.zComplex.imaginery += (scalar / 2) - ((double)y / scalar);
-	fractal->fractal.scale /= SCALE_PERC;
-	fractal->fractal.iteration -= SCALE_ITER;
-	ft_rgb_randomizer(fractal);
+	scalar = fract->fract.scale / SCALE_PERC;
+	fract->fract.z_comp.real = ((double) x / fract->fract.scale + \
+			fract->fract.z_comp.real) - (scalar / 2);
+	fract->fract.z_comp.real += (scalar / 2) - ((double) x / scalar);
+	fract->fract.z_comp.imgn = ((double) y / fract->fract.scale \
+			+ fract->fract.z_comp.imgn) - (scalar / 2);
+	fract->fract.z_comp.imgn += (scalar / 2) - ((double)y / scalar);
+	fract->fract.scale /= SCALE_PERC;
+	fract->fract.iter -= SCALE_ITER;
+	ft_rgb_randomizer(fract);
 }
 
-int	mouse_hook(int hook, int x, int y, t_fractal *fractal)
+int	mouse_hook(int hook, int x, int y, t_fractal *fract)
 {
 	if (hook == SCROLL_DOWN)
-		ft_zoom_in(x, y, fractal);
+		ft_zoom_in(x, y, fract);
 	if (hook == SCROLL_UP)
-		ft_zoom_out(x, y, fractal);
-	fractal->fractal.height = 0x0;
-	fractal->fractal.width = 0x0;
-	ft_draw(fractal);
+		ft_zoom_out(x, y, fract);
+	fract->fract.height = 0x0;
+	fract->fract.width = 0x0;
+	ft_draw(fract);
 	return (EXIT_SUCCESS);
 }

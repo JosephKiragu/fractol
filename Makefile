@@ -12,7 +12,7 @@ SRC =	./sources/main.c \
 		./sources/mandelbrotSetConstructor.c \
 		./sources/rabbitSetConstructor.c \
 		./sources/draw.c \
-		./sources/libft_utils.c \
+		./sources/utils.c \
 		./sources/hooks.c
 
 OBJ = $(SRC:.c=.o)
@@ -35,15 +35,3 @@ fclean :
 re : fclean all
 
 .PHONY : all clean fclean re
-
-
-# SRC = ./sources/main.c \
-# 	  ./sources/draw.c \
-# 	  ./sources/hooks.c \
-# 	  ./sources/ft_mandelbrot_constructor.c \
-# 	  ./sources/libft_utils.c \
-# 	  ./sources/pixilization.c \
-# 	  ./sources/ft_afplay.c \
-# 	  ./sources/julia_set_constructor.c \
-# 	  ./sources/shut_down_afplay.c \
-# 	  ./sources/rabbit_set_constructor.c
