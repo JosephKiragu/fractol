@@ -16,7 +16,7 @@ Fractol is a C program that generates fractal images, specifically Julia, Mandel
 
 1. Clone the repository:
 ```
-git clone https://github.com/yourusername/fractol.git
+git clone https://github.com/JosephKiragu/fractol.git
 ```
 
 2. Navigate to the project folder:
