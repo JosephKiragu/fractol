@@ -54,7 +54,7 @@ typedef struct png_info_s
 {
   unsigned int	width;
   unsigned int	height;
-  int		depth;
+  int		dp;
   int		color;
   int		interlace;
   int		bpp;
@@ -135,7 +135,7 @@ int	mipng_fill_img(mlx_img_list_t *img, unsigned char *buf, png_info_t *pi)
 				 (ipos>=iline && ipos%iline>3)?ibuf[ipos-iline-UNIQ_BPP]:0);
       ipos ++;
       bpos ++;
-      if (pi->depth == 16)
+      if (pi->dp == 16)
 	bpos ++;
       if (ipos % 4 == 3 && pi->color == 2)  // no alpha
 	img->buffer[ipos++] = 0xFF;
@@ -326,21 +326,21 @@ int	mipng_verif_hdr(unsigned char *hdr, png_info_t *pi)
   hdr += 8;
   pi->width = ntohl(*((unsigned long *)hdr));
   pi->height = ntohl(*((unsigned long *)(hdr+4)));
-  pi->depth = *(hdr+8);
+  pi->dp = *(hdr+8);
   pi->color = *(hdr+9);
   compress = *(hdr+10);
   filter = *(hdr+11);
   pi->interlace = *(hdr+12);
-  if (pi->width <= 0 || pi->height <= 0 || (pi->depth != 8 && pi->depth != 16)
+  if (pi->width <= 0 || pi->height <= 0 || (pi->dp != 8 && pi->dp != 16)
       || (pi->color != 2 && pi->color != 6) || compress != 0 || filter != 0 || pi->interlace != 0)
     return (ERR_STRUCT_INCIMPL);
-  pi->bpp = pi->depth / 8;
+  pi->bpp = pi->dp / 8;
   if (pi->color == 2)
     pi->bpp *= 3;
   if (pi->color == 6)
     pi->bpp *= 4;
-  //  printf("hdr info : %d x %d, depth %d, col type %d, comp %d, filter %d, interlace %d\nbpp is %d\n",
-  //	 pi->width, pi->height, pi->depth, pi->color, compress, filter, pi->interlace, pi->bpp);
+  //  printf("hdr info : %d x %d, dp %d, col type %d, comp %d, filter %d, interlace %d\nbpp is %d\n",
+  //	 pi->width, pi->height, pi->dp, pi->color, compress, filter, pi->interlace, pi->bpp);
   return (0);
 }
 
