@@ -1,5 +1,7 @@
 # Fractol
 
+![My Image](https://raw.githubusercontent.com/JosephKiragu/fractol/main/images/fractal.jpeg)
+
 Fractol is a C program that generates fractal images, specifically Julia, Mandelbrot, and Rabbit fractals. It uses the MiniLibX library to handle window management, user input, and image rendering. The project provides an interactive environment for users to explore different fractals and customize their appearance.
 
 ## Features
